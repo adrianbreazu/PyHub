@@ -28,6 +28,7 @@ class ReadDataRecurrency(models.Model):
     def __str__(self):
         return self.recurrency
 
+
 class Sensor (models.Model):
     unique_number = models.UUIDField()
     name = models.CharField(max_length=200)
