@@ -30,5 +30,5 @@ class Sensor (models.Model):
 
 class ReadData(models.Model):
     type = models.CharField(max_length=70, name='read data type')
-    value = models.CharField(default=0, name = 'read data value')
+    value = models.CharField(max_length=300, default=0, name = 'read data value')
     sensor = models.ForeignKey(Sensor)
