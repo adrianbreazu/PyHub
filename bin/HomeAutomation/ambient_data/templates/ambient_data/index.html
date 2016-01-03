@@ -1,0 +1,9 @@
+{% if sensors_list %}
+<ul>
+    {% for sensor in sensors_list %}
+    <li><a href="{% url 'ambient_data:detail' sensor.id %}">{{sensor.name}}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p> No sensor list is available.</p>
+{% endif %}

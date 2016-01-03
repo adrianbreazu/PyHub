@@ -49,4 +49,4 @@ class ReadData(models.Model):
     read_datetime = models.DateTimeField()
 
     def __str__(self):
-        return ':'.join([self.sensor.name,str(self.read_datetime)])
+        return ':'.join([self.sensor.name,self.type,str(self.read_datetime)])
