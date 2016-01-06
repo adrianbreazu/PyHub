@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {%block title%}Sensor {{sensor.name}} details{% endblock title%}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'bower_components/morrisjs/morris.css' %}">
+{% endblock style %}
 
 {% block content %}
 <br/>
@@ -8,7 +14,7 @@
 <div class="col-lg-6">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <strong>{{sensor.name}}</strong>
+            <strong>{{sensor.name}} - Temperature</strong>
         </div>
         <div class="panel-body">
             <div class="table-responsive">
@@ -19,11 +25,11 @@
                         <th>Value</th>
                     </thead>
                     <tbody>
-                        {% for sensor_data in readdata_list %}
+                        {% for temperature in temperature_list %}
                         <tr>
-                            <td>{{sensor_data.read_datetime}}</td>
-                            <td>{{sensor_data.type}}</td>
-                            <td>{{sensor_data.value}} </td>
+                            <td>{{temperature.read_datetime}}</td>
+                            <td>{{temperature.type}}</td>
+                            <td>{{temperature.value}} </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -32,4 +38,49 @@
         </div>
     </div>
 </div>
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{sensor.name}} - Pressure</strong>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table=hpver">
+                    <thead>
+                        <th>Date time</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                    </thead>
+                    <tbody>
+                        {% for humidity in humidity_list %}
+                        <tr>
+                            <td>{{humidity.read_datetime}}</td>
+                            <td>{{humidity.type}}</td>
+                            <td>{{humidity.value}} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{sensor.name}}
+        </div>
+        <div class="panel-body">
+            <div id="morris-sensor-chart"></div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'bower_components/raphael/raphael-min.js' %}"></script>
+<script src="{% static 'bower_components/morrisjs/morris.min.js' %}"></script>
+<script type="text/javascript">var morris_temperature_data = "{{morris_temperature_data}}", humidity_list = "{{humidity_list}}"; var temperature_list = "{{temperature_list}}"</script>
+<script src="{% static 'js/morris_detail.js' %}"></script>
+{% endblock javascript %}

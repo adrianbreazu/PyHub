@@ -11,7 +11,13 @@ def index(request):
 
 def detail(request, id):
     sensor = get_object_or_404(Sensor, id=id)
-    readdata_list = sensor.readdata_set.all()
+    data_list = sensor.readdata_set.all().order_by('read_datetime')
+    temperature_list = sensor.readdata_set.filter(type='temperature').order_by('read_datetime')
+    humidity_list = sensor.readdata_set.filter(type='humidity').order_by('read_datetime')
+    morris_temperature_data = '['
+    for temperature in temperature_list:
+        morris_temperature_data += '{ date: "' + str(temperature.read_datetime) + '", temperature: ' + temperature.value + ' },'
+    morris_temperature_data += ' ]'
     return render(request=request, template_name='ambient_data/detail.html', context={
-        'sensor': sensor, 'readdata_list': readdata_list
+        'sensor': sensor, 'temperature_list': temperature_list, 'humidity_list': humidity_list, 'data_list': data_list, 'morris_temperature_data': morris_temperature_data
     })

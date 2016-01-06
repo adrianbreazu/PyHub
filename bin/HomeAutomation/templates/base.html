@@ -2,16 +2,21 @@
 
 <html lang="en">
 <head>
-    {% block header %}
     <meta charset="UTF-8">
     <title>{% block title%}{% endblock title %}</title>
-    {% block style %}
+
     <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+    {% block style %}
     {% endblock style %}
-    {% endblock header %}
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-{% block body %}
     <div class="nav navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,14 +32,17 @@
             </ul>
         </div>
     </div>
-{% endblock body %}
     <div class="container">
+        <br/>
         {% block content %}
         {% endblock content %}
     </div>
-    {% block javascript %}
+
     <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
+    {% block javascript %}
     {% endblock javascript %}
+
 </body>
 </html>
