@@ -15,16 +15,15 @@
     <div class="nav navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a class = "navbar-brand" href="{% url 'dashboard:index' %}">Home</a>
+                <a class="navbar-brand" href="{% url 'dashboard:index' %}">Home</a>
             </div>
-            <ul class="nav navbar-nav">
-                <li><a href="{% url 'ambient_data:index' %}">Ambient</a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">About</a></li>
                 <li><a href="{% url 'ambient_data:index' %}">Ambient</a></li>
                 <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
                 <li><a href="{% url 'sprinkler_control:index' %}">Sprinkler</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Logout</a></li>
             </ul>
         </div>
     </div>
