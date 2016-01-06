@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    {% block header %}
+    <meta charset="UTF-8">
+    <title>{% block title%}{% endblock title %}</title>
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
+    {% endblock style %}
+    {% endblock header %}
+</head>
+<body>
+{% block body %}
+    <div class="nav navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class = "navbar-brand" href="{% url 'dashboard:index' %}">Home</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'ambient_data:index' %}">Ambient</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">About</a></li>
+                <li><a href="{% url 'ambient_data:index' %}">Ambient</a></li>
+                <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                <li><a href="{% url 'sprinkler_control:index' %}">Sprinkler</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock body %}
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    {% block javascript %}
+    <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    {% endblock javascript %}
+</body>
+</html>

@@ -1,9 +1,20 @@
-{% if sensors_list %}
-<ul>
-    {% for sensor in sensors_list %}
-    <li><a href="{% url 'ambient_data:detail' sensor.id %}">{{sensor.name}}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p> No sensor list is available.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block title%} Ambient sensor list {% endblock title %}
+
+{% block content %}
+    <div class='sensors'>
+        <h1>Sensor list</h1>
+        <div class="nav-list">
+            {% if sensors_list %}
+            <ul>
+                {% for sensor in sensors_list %}
+                <li><a href="{% url 'ambient_data:detail' sensor.id %}">{{sensor.name}}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p> No sensor list is available.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

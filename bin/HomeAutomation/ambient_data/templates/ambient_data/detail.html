@@ -1,7 +1,16 @@
-<h1>{{sensor.name}}</h1>
-<p> This is the detail page of {{sensor.id}}</p>
-<ul>
-{% for sensor_data in readdata_list %}
-    <li>{{sensor_data.type}} | {{sensor_data.value}} | {{sensor_data.read_datetime}}</li>
-{% endfor %}
-</ul>
+{% extends "base.html" %}
+
+{%block title%}Sensor {{sensor.name}} details{% endblock title%}
+
+{% block content %}
+<div>
+    <h1>Data for sensor: {{sensor.name}}</h1>
+    <div>
+        <ul>
+        {% for sensor_data in readdata_list %}
+            <li>{{sensor_data.type}} | {{sensor_data.value}} | {{sensor_data.read_datetime}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

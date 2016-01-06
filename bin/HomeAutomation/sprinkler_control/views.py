@@ -3,5 +3,5 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-def index(respose):
-    return HttpResponse("Welcome to sprinkler_control index page")
+def index(response):
+    return render(context={}, request=response, template_name="sprinkler_control/index.html")
