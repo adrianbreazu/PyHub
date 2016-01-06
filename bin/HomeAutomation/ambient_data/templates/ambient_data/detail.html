@@ -3,14 +3,33 @@
 {%block title%}Sensor {{sensor.name}} details{% endblock title%}
 
 {% block content %}
-<div>
-    <h1>Data for sensor: {{sensor.name}}</h1>
-    <div>
-        <ul>
-        {% for sensor_data in readdata_list %}
-            <li>{{sensor_data.type}} | {{sensor_data.value}} | {{sensor_data.read_datetime}}</li>
-        {% endfor %}
-        </ul>
+<br/>
+
+<div class="col-lg-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>{{sensor.name}}</strong>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table=hpver">
+                    <thead>
+                        <th>Date time</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                    </thead>
+                    <tbody>
+                        {% for sensor_data in readdata_list %}
+                        <tr>
+                            <td>{{sensor_data.read_datetime}}</td>
+                            <td>{{sensor_data.type}}</td>
+                            <td>{{sensor_data.value}} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
