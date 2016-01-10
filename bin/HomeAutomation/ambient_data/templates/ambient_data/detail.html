@@ -81,6 +81,6 @@
 {% block javascript %}
 <script src="{% static 'bower_components/raphael/raphael-min.js' %}"></script>
 <script src="{% static 'bower_components/morrisjs/morris.min.js' %}"></script>
-<script type="text/javascript">var morris_temperature_data = "{{morris_temperature_data}}", humidity_list = "{{humidity_list}}"; var temperature_list = "{{temperature_list}}"</script>
+<script type="text/javascript">var jsonDataList = JSON.parse('{{data_list | escapejs}}')</script>
 <script src="{% static 'js/morris_detail.js' %}"></script>
 {% endblock javascript %}

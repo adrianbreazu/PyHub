@@ -1,20 +1,23 @@
-console.log(humidity_list)
-console.log(temperature_list)
-console.log(morris_temperature_data)
+var data_array = [];
+for (var i=0; i < jsonDataList.length; i++) {
+    var obj = jsonDataList[i];
+    console.log(obj.fields.value);
+    if (obj.fields.type == 'temperature')
+        data_array.push({date:obj.fields.read_datetime, temperature:obj.fields.value});
+    else
+        data_array.push({date:obj.fields.read_datetime, humidity:obj.fields.value});
+};
 
-/*$(Morris.Line({
+console.log(data_array);
+
+$(Morris.Line({
     element: 'morris-sensor-chart',
 
-    data:[
-
-        {% for sensor_data in readdata_list %}
-            { date: '{{ sensor_data.read_datetime }}', temperature: {{ sensore.read.type }} },
-        {% endfor %}
-    ],
+    data: data_array,
 
     xkey: 'date',
 
-    ykeys: ['temperature'],
+    ykeys: ['temperature', 'humidity'],
 
-    labels: ['Temperature']
-}));*/
+    labels: ['Temperature', 'Humidity']
+}));
