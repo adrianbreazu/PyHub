@@ -2,10 +2,13 @@
 
 {% block title%} Ambient sensor list {% endblock title %}
 
+{% block header %}
+<h1 class="page-header">Ambient sensors list</h1>
+{% endblock header %}
+
 {% block content %}
-    <div class='sensors'>
-        <h1>Sensor list</h1>
-        <div class="nav-list">
+    <div class='row'>
+        <div class="col-lg-12">
             {% if sensors_list %}
             <ul>
                 {% for sensor in sensors_list %}

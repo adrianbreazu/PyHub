@@ -6,64 +6,61 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'bower_components/morrisjs/morris.css' %}">
-<link rel="stylesheet" href="{% static 'bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' }%">
-<link rel="stylesheet" href="{% static 'bower_components/datatables-responsive/css/dataTables.responsive.css' %}"
+<link rel="stylesheet" href="{% static 'bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'bower_components/datatables-responsive/css/dataTables.responsive.css' %}">
 {% endblock style %}
 
+{% block header %}
+<h1 class="page-header">Sensor: {{sensor.name}} data</h1>
+{% endblock header %}
+
 {% block content %}
-<div>
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Sensor: {{sensor.name}} data</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{sensor.name}} table data
-                </div>
-                <div class="panel-body">
-                    <div class="dataTable_wrapper">
-                        <table class="table table-striped table-bordered table-hover" id="senosr-table">
-                            <thead>
-                                <tr>
-                                    <th>Date time</th>
-                                    <th>Type</th>
-                                    <th>Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for temperature in temperature_list %}
-                                <tr class="temperature">
-                                    <td>{{temperature.read_datetime}}</td>
-                                    <td>{{temperature.type}}</td>
-                                    <td>{{temperature.value}} </td>
-                                </tr>
-                                {% endfor %}
-                                {% for humidity in humidity_list %}
-                                <tr class="humidity">
-                                    <td>{{humidity.read_datetime}}</td>
-                                    <td>{{humidity.type}}</td>
-                                    <td>{{humidity.value}} </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{sensor.name}} table data
+            </div>
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="senosr-table">
+                        <thead>
+                            <tr>
+                                <th>Date time</th>
+                                <th>Type</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for temperature in temperature_list %}
+                            <tr class="temperature">
+                                <td>{{temperature.read_datetime}}</td>
+                                <td>{{temperature.type}}</td>
+                                <td>{{temperature.value}} </td>
+                            </tr>
+                            {% endfor %}
+                            {% for humidity in humidity_list %}
+                            <tr class="humidity">
+                                <td>{{humidity.read_datetime}}</td>
+                                <td>{{humidity.type}}</td>
+                                <td>{{humidity.value}} </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{sensor.name}}
-                </div>
-                <div class="panel-body">
-                    <div id="morris-sensor-chart"></div>
-                </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{sensor.name}}
+            </div>
+            <div class="panel-body">
+                <div id="morris-sensor-chart"></div>
             </div>
         </div>
     </div>
