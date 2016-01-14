@@ -1,20 +1,36 @@
-var data_array = [];
+var temperature_array = [];
+var humidity_array = [];
+/* JSON has data sorted past-> present */
 for (var i=0; i < jsonDataList.length; i++) {
     var obj = jsonDataList[i];
+
     if (obj.fields.type == 'temperature')
-        data_array.push({date:obj.fields.read_datetime, temperature:obj.fields.value});
+        temperature_array.push({date:obj.fields.read_datetime, temperature:obj.fields.value});
     else
-        data_array.push({date:obj.fields.read_datetime, humidity:obj.fields.value});
+        humidity_array.push({date:obj.fields.read_datetime, humidity:obj.fields.value});
+
 };
 
 $(Morris.Line({
-    element: 'morris-sensor-chart',
+    element: 'morris-temperature-chart',
 
-    data: data_array,
+    data: temperature_array,
 
     xkey: 'date',
 
-    ykeys: ['temperature', 'humidity'],
+    ykeys: ['temperature'],
 
-    labels: ['Temperature', 'Humidity']
+    labels: ['Temperature']
+}));
+
+$(Morris.Line({
+    element: 'morris-humidity-chart',
+
+    data: humidity_array,
+
+    xkey: 'date',
+
+    ykeys: ['humidity'],
+
+    labels: ['Humidity']
 }));

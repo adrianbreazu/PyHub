@@ -7,7 +7,6 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'bower_components/morrisjs/morris.css' %}">
 <link rel="stylesheet" href="{% static 'bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}">
-<link rel="stylesheet" href="{% static 'bower_components/datatables-responsive/css/dataTables.responsive.css' %}">
 {% endblock style %}
 
 {% block header %}
@@ -54,13 +53,23 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{sensor.name}}
+                {{sensor.name}} - Temperature
             </div>
             <div class="panel-body">
-                <div id="morris-sensor-chart"></div>
+                <div id="morris-temperature-chart"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{sensor.name}} - Humidity
+            </div>
+            <div class="panel-body">
+                <div id="morris-humidity-chart"></div>
             </div>
         </div>
     </div>
