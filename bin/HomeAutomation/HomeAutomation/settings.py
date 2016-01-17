@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'ambient_data.apps.AmbientDataConfig',
     'dashboard.apps.DashboardConfig',
     'sprinkler_control.apps.SprinklerControlConfig',
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
