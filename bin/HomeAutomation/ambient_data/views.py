@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Sensor
 from django.core import serializers
 
 
+@login_required
 def index(request):
     sensors_list = Sensor.objects.order_by('name')
     context = {'sensors_list': sensors_list}
@@ -13,6 +15,7 @@ def index(request):
                   )
 
 
+@login_required
 def detail(request, id):
     sensor = get_object_or_404(Sensor, id=id)
     data_list = sensor.readdata_set.all().order_by('read_datetime')

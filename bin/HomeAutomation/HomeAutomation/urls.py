@@ -18,7 +18,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    #url(r'^#$', ),
+    url(r'^$', include('dashboard.urls')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^ambient/', include('ambient_data.urls')),
     url(r'^dashboard/', include('dashboard.urls')),
     url(r'^sprinkler/', include('sprinkler_control.urls')),
