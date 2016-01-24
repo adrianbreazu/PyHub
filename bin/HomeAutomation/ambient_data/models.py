@@ -22,11 +22,11 @@ class SensorType(models.Model):
         return self.type
 
 
-class ReadDataRecurrency(models.Model):
-    recurrency = models.CharField(max_length=70)
+class ReadDataInterval(models.Model):
+    interval = models.CharField(max_length=70)
 
     def __str__(self):
-        return self.recurrency
+        return self.interval
 
 
 class Sensor (models.Model):
@@ -36,7 +36,7 @@ class Sensor (models.Model):
     board_type = models.ForeignKey(BoardType)
     communication_type = models.ForeignKey(CommunicationType)
     sensor_type = models.ForeignKey(SensorType)
-    read_data_recurrency = models.ForeignKey(ReadDataRecurrency)
+    read_data_interval = models.ForeignKey(ReadDataInterval)
 
     def __str__(self):
         return self.name

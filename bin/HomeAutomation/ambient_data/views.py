@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Sensor
+from .models import *
 from django.core import serializers
 
 
@@ -12,6 +12,25 @@ def index(request):
     return render(context=context,
                   request=request,
                   template_name='ambient_data/index.html'
+                  )
+
+
+@login_required
+def maintain(request):
+    sensors_list = Sensor.objects.order_by('name')
+    read_data_interval = ReadDataInterval.objects.order_by('interval')
+    board_type = BoardType.objects.order_by('type')
+    communication_type = CommunicationType.objects.order_by('type')
+    sensor_type = SensorType.objects.order_by('type')
+    context = {'sensors_list': sensors_list,
+               'board_type': board_type,
+               'read_data_interval': read_data_interval,
+               'communication_type': communication_type,
+               'sensor_type': sensor_type,
+               }
+    return render(context=context,
+                  request=request,
+                  template_name='ambient_data/maintain.html'
                   )
 
 

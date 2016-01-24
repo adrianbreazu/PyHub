@@ -61,7 +61,10 @@
                             <a href="#"><i class="fa fa-signal fa-fw"></i> Sensors<span class="fa arrow"></span> </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{% url 'ambient_data:index' %}">Ambient Sensors Index</a>
+                                    <a href="{% url 'ambient_data:index' %}">View ambient sensor data</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ambient_data:maintain' %}">Maintain ambient sensors</a>
                                 </li>
                             </ul>
                         </li>
@@ -69,7 +72,7 @@
                             <a href="#"><i class="fa fa-tint fa-fw"></i> Sprinklers<span class="fa arrow"></span> </a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{% url 'sprinkler_control:index' %}">Garden Sprinkler control</a>
+                                    <a href="{% url 'sprinkler_control:index' %}">Garden sprinkler control</a>
                                 </li>
                             </ul>
                         </li>

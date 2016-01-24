@@ -16,6 +16,6 @@ class SensorAdmin(admin.ModelAdmin):
 admin.site.register(BoardType)
 admin.site.register(CommunicationType)
 admin.site.register(SensorType)
-admin.site.register(ReadDataRecurrency)
+admin.site.register(ReadDataInterval)
 admin.site.register(Sensor, SensorAdmin)
 admin.site.register(ReadData)

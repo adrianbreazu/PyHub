@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} Maintain sensor list {% endblock title%}
+
+{%block header%} <h1 class="page-header">Maintain sensor list</h1>{% endblock header %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% if sensors_list %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Sensor list
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="sensorTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Board Type</th>
+                                    <th>Communication</th>
+                                    <th>Sensor Type</th>
+                                    <th>Read Data Recurrence</th>
+                                    <th>Operation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sensor in sensors_list %}
+                                <tr>
+                                    <td>{{sensor.unique_number}}</td>
+                                    <td>{{sensor.name}}</td>
+                                    <td>{{sensor.location}}</td>
+                                    <td>{{sensor.board_type}}</td>
+                                    <td>{{sensor.communication_type}}</td>
+                                    <td>{{sensor.sensor_type}}</td>
+                                    <td>{{sensor.read_data_interval}}</td>
+                                    <td><a onclick="EditSensor(this)" ><i class="fa fa-edit fa-fw"></i></a> <a onclick="DeleteSensor(this)"><i class="glyphicon glyphicon-trash glyphicon-fw"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <button onclick="AddSensor()" type="button" class="btn btn-outline btn-primary btn-sm btn-block">Add <i class="fa fa-plus fa-fw"></i></button>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p> No sensor list is available.</p>
+            {% endif %}
+        </div>
+        <div id="form-edit" class="col-lg-12 invisible">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Sensor data
+                </div>
+                <div class="panel-body">
+                    <form role="form" name="myEditForm" action="#" onsubmit="return ValidateForm()">
+                        <div class="form-group">
+                           <label>Sensor Id</label>
+                            <input id="sensorId" class="form-control" placeholder="12345678901234567890123456789012">
+                        </div>
+                        <div class="form-group">
+                           <label>Sensor Name</label>
+                            <input id="sensorName" class="form-control" placeholder="Outside sensor">
+                        </div>
+                        <div class="form-group">
+                           <label>Sensor Location</label>
+                            <input id="sensorLocation" class="form-control" placeholder="outside">
+                        </div>
+                        <div class="form-group">
+                           <label>Sensor Board Type</label>
+                            <select id="sensorBoardType" class="form-control">
+                                {% for type in board_type %}
+                                <option>{{type.type}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                           <label>Sensor Communication Type</label>
+                            <select id="sensorCommunicationType" class="form-control">
+                                {% for type in communication_type %}
+                                    <option>{{type.type}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                           <label>Sensor Sensor Type</label>
+                            <select id="sensorType" class="form-control">
+                                {% for type in sensor_type %}
+                                <option>{{type.type}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                           <label>Sensor Read Data Interval</label>
+                            <select id="sensorReadDataInterval" class="form-control">
+                                {% for interval in read_data_interval %}
+                                <option>{{interval.interval}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button onclick="SaveChanges()" type="submit" class="btn btn-outline btn-primary btn-sm btn-block">Save <i class="fa fa-save fa-fw"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/maintain_sensors.js' %}"></script>
+{% endblock javascript %}
