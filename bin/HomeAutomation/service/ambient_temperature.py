@@ -1,6 +1,10 @@
 import os
 import django
 import sys
+import RPi.GPIO as GPIO
+import dht11
+import time
+import datetime
 
 
 # setup django context
@@ -12,6 +16,11 @@ django.setup()
 # load django models
 from ambient_data.models import *
 from django.utils import timezone
+
+# initialize GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
 
 
 def ambient_data(sensor_id, temperature, humidity):
@@ -31,4 +40,13 @@ def ambient_data(sensor_id, temperature, humidity):
 
 
 # test by adding some data
-ambient_data(12345678901234567890123456789012, 44, 88)
+instance = dht11.DHT11(pin = 4)
+
+while True:
+    result = instance.read()
+    if result.is_valid():
+        #print("Last valid input: " + str(datetime.datetime.now()))
+        #print("Temperature: %d C" % result.temperature)
+        #print("Humidity: %d %%" % result.humidity)
+        ambient_data(12345678901234567890123456789012, result.temperature, result.humidity)
+    time.sleep(3600)
