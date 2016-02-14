@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 from .models import *
 from django.core import serializers
+from .forms import AmbientData
 
 
 @login_required
@@ -48,3 +51,25 @@ def detail(request, id):
                            'humidity_list': humidity_list,
                            'data_list': serializers.serialize('json', data_list)
                            })
+
+
+@csrf_exempt
+def sensor_temperature_and_humidity(request):
+    print('begin sensor_temperature_and_humidity view')
+    if request.method == "POST":
+        print('Raw data : %s' % request.body)
+        retrieve_json_data = json.loads(request.body.decode('utf-8'))
+        add_ambient_data(sensor_id=retrieve_json_data['sensor_id'],
+                         temperature=retrieve_json_data['temperature'],
+                         humidity=retrieve_json_data['humidity'])
+        return HttpResponse("Bravo Bruno")
+        #form = AmbientData(request.POST)
+        #if form.is_valid():
+        #    add_ambient_data(sensor_id=form.cleaned_data['sensor_id'],
+        #                     temperature=form.cleaned_data['temperature'],
+        #                      humidity=form.cleaned_data['humidity'])
+        #    return HttpResponse("Bravo Bruno")
+        #else:
+        #    return HttpResponse("Nu Bruno !")
+    else:
+        return HttpResponse("Nu Bruno !!")

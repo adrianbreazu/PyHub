@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 class BoardType(models.Model):
@@ -50,3 +51,22 @@ class ReadData(models.Model):
 
     def __str__(self):
         return ':'.join([self.sensor.name,self.type,str(self.read_datetime)])
+
+
+def add_ambient_data(sensor_id, temperature, humidity):
+    read_data = datetime.datetime.now()
+    print('model sensor_id = ' + str(sensor_id))
+    sensor = Sensor.objects.get(unique_number=sensor_id)
+    print('model sensor =' + str(sensor))
+    ReadData.objects.create(
+            type='temperature',
+            value=temperature,
+            sensor=sensor,
+            read_datetime=read_data
+    )
+    ReadData.objects.create(
+            type='humidity',
+            value=humidity,
+            sensor=sensor,
+            read_datetime=read_data
+    )
