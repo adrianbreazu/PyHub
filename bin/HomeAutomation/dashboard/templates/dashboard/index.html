@@ -1,7 +1,96 @@
 {% extends "base.html" %}
 
-{% block title %} Dashboard{% endblock title %}
+{% load staticfiles %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'bower_components/morrisjs/morris.css' %}">
+<link rel="stylesheet" href="{% static 'bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css' %}">
+{% endblock style %}
+
 
 {% block content %}
-<h1>Welcome to dashboard index page</h1>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Welcome to dashboard index page</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-dashboard fa-fw"></i> Last temperature &amp; humidity
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Sensors
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">Sensor 1</a></li>
+                                <li><a href="#">Sensor 2</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div style="overflow: hidden">
+                        <div id="TemperatureGauge" style="position: relative; left: -0.5px; width:300px; height:270px"></div>
+                        <div id="HumidityGauge" style="position: relative; left: -0.5px; width:300px; height:270px"></div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    Last read time : {{lastreadtime}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Temperature &amp; humidity
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                View data
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">last 24 hours view</a></li>
+                                <li><a href="#">last 48 hours view</a></li>
+                                <li><a href="#">last 7 days view</a></li>
+                                <li><a href="#">last month view</a></li>
+                                <li><a href="#">all data view</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Sensors
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">Sensor 1</a></li>
+                                <li><a href="#">Sensor 2</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div id="morris-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'bower_components/raphael/raphael-min.js' %}"></script>
+<script src="{% static 'bower_components/morrisjs/morris.min.js' %}"></script>
+<script src="{% static 'justgage/dist/justgage.js' %}"></script>
+<script src="{% static 'justgage/dist/raphael-2.1.4.min.js' %}"></script>
+<script>var last_temp = {{lasttemperature}}; var last_humidity = {{lasthumidity}};</script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock javascript %}
