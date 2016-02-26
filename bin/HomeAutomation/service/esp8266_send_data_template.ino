@@ -13,27 +13,35 @@ String POST = "POST /ambient/sensor_data HTTP/1.1";
 
 // DHT11 section
 #define DHTPIN 4
-#define DHTTYPE DHT11   // DHT 11
+#define DHTTYPE DHT22   // DHT 22
 DHT dht(DHTPIN, DHTTYPE);
 
 //init esp8266
 SoftwareSerial esp8266(2,3);
 
+//bmp180
+Adafruit_BMP085 bmp;
+
 void setup()
 {
   boolean connectionEstablished = false;
   Serial.begin(9600);
+
   esp8266.begin(9600);
   dht.begin();
 
-  delay(6000);
+  if (!bmp.begin()) {
+    Serial.println("No BMP sensor!");
+  }
+
+  delay(2000);
 
   sendData("AT+RST", 2000, DEBUG);
   delay(2000);
-  
+
   sendData("AT", 2000, DEBUG);
   delay(2000);
-  
+
   initialize();
   while (!connectionEstablished) {
     connectionEstablished = connectToNetwork();
@@ -53,11 +61,23 @@ void loop(){
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
-  
+
   char buffer[10];
   String temperature = dtostrf(t, 4, 1, buffer);
   String humidity = dtostrf(h, 4, 1, buffer);
-  if (sendAmbiendData(temperature, humidity)) {
+
+  Serial.print("Temperature = ");
+  Serial.println(temperature);
+
+  Serial.print("Humidity = ");
+  Serial.println(humidity);
+
+  Serial.print("Pressure = ");
+  Serial.print(bmp.readPressure());
+  float p = bmp.readPressure();
+  String pressure = dtostrf(p, 6, 1, buffer);
+
+  if (sendAmbiendData(temperature, humidity, pressure)) {
     delay(60000);
   }
 }
@@ -71,9 +91,9 @@ boolean initialize() {
   delay(2000);
 }
 
-boolean sendAmbiendData(String temperature, String humidity){
+boolean sendAmbiendData(String temperature, String humidity, String pressure){
   String response = "";
-  
+
   // send Start command
   String cmd = "AT+CIPSTART=0,\"TCP\",\"";
   cmd += IP;
@@ -81,7 +101,7 @@ boolean sendAmbiendData(String temperature, String humidity){
   cmd += PORT;
   response = sendData(cmd, 2000, DEBUG);
   delay(2000);
-  
+
   if(response.indexOf("ERROR") > 0){
     return false;
   }
@@ -93,7 +113,11 @@ boolean sendAmbiendData(String temperature, String humidity){
   json_message += temperature;
   json_message += "\", \"humidity\": \"";
   json_message += humidity;
+  json_message += "\", \"pressure\": \"";
+  json_message += pressure;
   json_message += "\" }";
+
+ Serial.println(json_message);
 
   cmd = "";
   cmd = POST;
@@ -110,7 +134,7 @@ boolean sendAmbiendData(String temperature, String humidity){
 
   String length_msg= "AT+CIPSEND=0,";
   length_msg += cmd.length();
-  
+
   response = sendData(length_msg, 2000, DEBUG);
   if(response.indexOf(">") >= 0) {
     sendData(cmd, 2000, DEBUG);
@@ -121,16 +145,16 @@ boolean sendAmbiendData(String temperature, String humidity){
 
 boolean connectToNetwork(){
   String response ="";
-  
+
   String cmd="AT+CWJAP=\"";
   cmd+=SSID;
   cmd+="\",\"";
   cmd+=PASS;
   cmd+="\"";
   response = sendData(cmd, 10000, DEBUG);
-  
+
   delay(15000);
-  
+
   if(response.indexOf("OK") > 0) {
     return true;
   }
@@ -141,19 +165,19 @@ boolean connectToNetwork(){
 
 String sendData(String command, const int timeout, boolean debug)
 {
-    String response = "";   
-    esp8266.println(command); // send the read character to the esp8266    
+    String response = "";
+    esp8266.println(command); // send the read character to the esp8266
     long int time = millis();
-        
+
     while( (time+timeout) > millis()) {
-      while(esp8266.available()) {    
-        // The esp has data so display its output to the serial window 
+      while(esp8266.available()) {
+        // The esp has data so display its output to the serial window
         char c = esp8266.read(); // read the next character.
         response+=c;
-      }  
-    }    
+      }
+    }
     if(debug) {
       Serial.println(response);
-    }    
+    }
     return response;
 }

@@ -53,11 +53,10 @@ class ReadData(models.Model):
         return ':'.join([self.sensor.name,self.type,str(self.read_datetime)])
 
 
-def add_ambient_data(sensor_id, temperature, humidity):
+def add_ambient_data(sensor_id, temperature, humidity, pressure):
     read_data = datetime.datetime.now()
-    print('model sensor_id = ' + str(sensor_id))
     sensor = Sensor.objects.get(unique_number=sensor_id)
-    print('model sensor =' + str(sensor))
+    print('!!! model sensor =' + str(sensor))
     ReadData.objects.create(
             type='temperature',
             value=temperature,
@@ -67,6 +66,12 @@ def add_ambient_data(sensor_id, temperature, humidity):
     ReadData.objects.create(
             type='humidity',
             value=humidity,
+            sensor=sensor,
+            read_datetime=read_data
+    )
+    ReadData.objects.create(
+            type='pressure',
+            value=pressure,
             sensor=sensor,
             read_datetime=read_data
     )

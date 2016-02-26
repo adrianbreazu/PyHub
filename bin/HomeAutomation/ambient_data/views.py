@@ -55,19 +55,20 @@ def detail(request, id):
 
 @csrf_exempt
 def sensor_temperature_and_humidity(request):
-    print('begin sensor_temperature_and_humidity view')
     if request.method == "POST":
-        print('Raw data : %s' % request.body)
+        print('!!! Raw data : %s' % request.body)
         retrieve_json_data = json.loads(request.body.decode('utf-8'))
         add_ambient_data(sensor_id=retrieve_json_data['sensor_id'],
                          temperature=retrieve_json_data['temperature'],
-                         humidity=retrieve_json_data['humidity'])
+                         humidity=retrieve_json_data['humidity'],
+                         pressure=retrieve_json_data['pressure'])
         return HttpResponse("Bravo Bruno")
         #form = AmbientData(request.POST)
         #if form.is_valid():
         #    add_ambient_data(sensor_id=form.cleaned_data['sensor_id'],
         #                     temperature=form.cleaned_data['temperature'],
-        #                      humidity=form.cleaned_data['humidity'])
+        #                     humidity=form.cleaned_data['humidity'],
+        #                     pressure=retrieve_json_data['pressure'])
         #    return HttpResponse("Bravo Bruno")
         #else:
         #    return HttpResponse("Nu Bruno !")
