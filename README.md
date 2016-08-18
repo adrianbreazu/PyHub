@@ -1,4 +1,4 @@
-# PyHub
+# PyHub - STATUS - ON HOLD (DEVELOPMENT PENDING)
 PyHub is a small home automation project based on Django 1.9 and Python 3.5 .
 It uses 
 
